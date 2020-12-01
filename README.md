@@ -121,7 +121,7 @@ A not mandatory custom message.
 
 ### `event_show`
 
-True to show the event. Default true.
+True to show the event. Default false.
 
 ## Outputs
 

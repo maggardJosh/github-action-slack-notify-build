@@ -23,7 +23,7 @@ inputs:
   event_show:
     description: 'If to show the event field.'
     required: false
-    default: true
+    default: false
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
