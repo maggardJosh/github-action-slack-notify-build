@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/mirta-com/github-action-slack-notify-build/compare/v1.3.4...v1.3.5) (2020-12-01)
+
+
+### Bug Fixes
+
+* **event:** set default on input event_show ([0c2d079](https://github.com/mirta-com/github-action-slack-notify-build/commit/0c2d079899583650205284a61c428a91dbf23a59))
+
 ## [1.3.4](https://github.com/mirta-com/github-action-slack-notify-build/compare/v1.3.3...v1.3.4) (2020-12-01)
 
 
