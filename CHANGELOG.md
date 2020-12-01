@@ -1,3 +1,10 @@
+## [1.3.4](https://github.com/mirta-com/github-action-slack-notify-build/compare/v1.3.3...v1.3.4) (2020-12-01)
+
+
+### Bug Fixes
+
+* **event:** boolean input for showing event ([2823313](https://github.com/mirta-com/github-action-slack-notify-build/commit/28233135b0a762388780cd1dacf08153710477df))
+
 ## [1.3.3](https://github.com/mirta-com/github-action-slack-notify-build/compare/v1.3.2...v1.3.3) (2020-11-30)
 
 
