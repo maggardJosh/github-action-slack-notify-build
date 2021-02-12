@@ -1071,6 +1071,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const channel = core.getInput('channel');
     const status = core.getInput('status');
     const color = core.getInput('color');
+    const message = core.getInput('message');
     const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
@@ -1080,7 +1081,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ status, color, github, message });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -1093,6 +1094,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const args = {
       channel: channelId,
       attachments,
+      text: message
     };
 
     if (messageId) {
@@ -10001,7 +10003,7 @@ module.exports = resolveCommand;
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github }) {
+function buildSlackAttachments({ status, color, github, message }) {
   const { payload, ref, workflow, eventName } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -10022,32 +10024,39 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
-    {
-      color,
-      fields: [
-        {
-          title: 'Action',
-          value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
-          short: true,
-        },
-        {
-          title: 'Status',
-          value: status,
-          short: true,
-        },
-        referenceLink,
-        {
-          title: 'Event',
-          value: event,
-          short: true,
-        },
-      ],
-      footer_icon: 'https://github.githubassets.com/favicon.ico',
-      footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
-      ts: Math.floor(Date.now() / 1000),
-    },
-  ];
+  var attachment = {
+    color,
+    fields: [
+      {
+        title: 'Action',
+        value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
+        short: true,
+      },
+      {
+        title: 'Status',
+        value: status,
+        short: true,
+      },
+      referenceLink,
+      {
+        title: 'Event',
+        value: event,
+        short: true,
+      },
+    ],
+    footer_icon: 'https://github.githubassets.com/favicon.ico',
+    footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
+    ts: Math.floor(Date.now() / 1000),
+  };
+
+  if (message)
+    attachment['fields'].push({
+      title: 'Message',
+      value: message,
+      short: false,
+    });
+
+  return [attachment];
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;
